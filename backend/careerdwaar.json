@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "careerdwaar",
+  "private_key_id": "d3199d7be2658dffae6d13dfb4172e9621fcbd9a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDLLnfa7H/x5skb\njuBlluSz94SbzuSjfHuPdV6ddiPsVmwnRGdC3ncl24X7xaL7C388VMO9cpVIcLh6\nHRZu2oH1o8PWLq1Y0JvZlhwe6jdhTpynUEGfd/RJqUc1MmZvP1CQErzM7zCtZHcd\nG3/3P9wFiPY8dsK300ZmZQNOd2JpGnmLpsnVP4flN1zxlCBB2lpeay4LJHjrmbQx\n9ZYVnB78mxhqifDhQlM/CKZCp3kvIWtOsAIdKuHWEbjrm2icq+1cVKuxnuIwmXTd\nTgcDnOW3jCYaNMJ5eNQ+cI3OHz3dTS+ODPMWnqsEkwRqYZw2pVt0P3QJLiurAn5M\nnSeGHfWjAgMBAAECggEAHs/YsDPuQS5o8AtuPymvXBVcoE4zQRGnIT3Az+szDmua\nsie+6xaWhgCw5Fn32c9IB8uo9WlTdy1U5HvVw5DSZYBkue3RLudPwyLu98c4B8Mm\noX7bvMWxn5wSpuASRauZ2Ydl50QcoybZo2ngsYuXH6XCBbBS3hKlmfCWnEchfuOV\n1RH8MGpejL1LzgqcBqtbwSxUJAgNluGDX8/GP736v0S7BeRjFJDoKsea/5rsgUSB\nKPmWPlKqKmMjPM7WATQa+KfHFd9IwQwoZxJUCKgLmxt6FrCCnCCRVh30+35NFzBX\nMjz0ehZKOvzbsPIZ/ZPfRtU/kcJeOmyqbSWUvxkK5QKBgQD+icgnaXd70Xbc6Z0e\nOsjCO2CBTWw/myvkkegpsTd+4wLS4rvEZGBOr00oeTXdMOD9bKV5M3J4SJTSaXzX\npNnhuVT9ZcZITuu3zl4RK4SFvHBhbLm42zEZS60q2Dkin8MSyoMS2ZdITTjV8+X0\nxqzmxh046MDEHiDCZ7gsP3ChjQKBgQDMWS65O49nwu0PoCXVwS0effDlOFMednVn\nN83mzwBSiPY+YR5Y+UvdszhwMaN5jJr1g7HRNM76G4mpFrfBozbSHIiOCvoVcvIN\nFXYOUKR+cvxqTMs6ivg9oPxPYqtZa+S/DXyx6Spbe9xmB13XH92Kv/iEibdr70GB\n8Ui4i1dv7wKBgQDXhE3GoRQb8HUWA2+XIurNGn1Rvf5DtNzrQWcztetpMkk3yeZ2\nGQ86UE+iT07+I968dPt+rcLkeYAY0Fx2MgyRhNyjWUMUAk6vaLpZC2G/4pe8xdRS\n4rSl2F+dAUsPN/pxtKpakYX4H/pZnZM9N+M52tDvWJOu+lt+f1d/j4+MGQKBgCYw\npKLJlst1iohZDbkdGSmRr+um0yHmUZqwuzJfjVffcOXHkLxgGuWcEPgmzr5woKUx\nr5HBpMzpSJjpPf5aWmx6GKszMfnAOaxoTl/ugk9/fdz/7RtLzYj3BTBw6EUV/PIX\nuy4kvV3LkC0hQ1BpDCZaKj/a3QS2+i8mwMh8giLRAoGBALrtePe5MDEEJxvBfxeS\nWYVVRLrgHFj33/xR1aJGHMYJfvCLou2YSlvSGM738bJYiSJhCTETpnbUIM5v27L2\nuh88IIMz1Q+JljAbrdQXa1kGJ6cyr6782yjuDk980ajb75RJ1IowsOYwhwpXoojX\nwEJjzr9+5z1YJ/PdmtUUB7aD\n-----END PRIVATE KEY-----\n",
+  "client_email": "careerdwaar@careerdwaar.iam.gserviceaccount.com",
+  "client_id": "102869634433315867197",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/careerdwaar%40careerdwaar.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

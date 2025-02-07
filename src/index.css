@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-orange: #ff6b35;
+  --color-primary-blue: #0077b6;
+
+  --color-white: #ffffff;
+  --color-darkgrey: #1e1e1e;
+  --color-green: #28a745;
+
+  --color-bglightgray: #f8f9fa;
+  --color-darkblue: #003049;
+}
+
+* {
+  scrollbar-width: none;
+}

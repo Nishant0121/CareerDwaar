@@ -1,0 +1,72 @@
+[
+  {
+    "title": "Software Engineer",
+    "company": "Tech Mahindra",
+    "location": "Pune, India",
+    "salary": "₹10,00,000 per annum",
+    "description": "Looking for a skilled full-stack developer with experience in React and Node.js."
+  },
+  {
+    "title": "Data Scientist",
+    "company": "TCS",
+    "location": "Bangalore, India",
+    "salary": "₹12,00,000 per annum",
+    "description": "Expertise in Python, Machine Learning, and AI required. Experience with TensorFlow is a plus."
+  },
+  {
+    "title": "Digital Marketing Manager",
+    "company": "Infosys",
+    "location": "Mumbai, India",
+    "salary": "₹8,00,000 per annum",
+    "description": "Responsible for managing digital marketing campaigns, SEO, and social media strategy."
+  },
+  {
+    "title": "HR Executive",
+    "company": "Wipro",
+    "location": "Hyderabad, India",
+    "salary": "₹6,50,000 per annum",
+    "description": "Looking for an HR executive with experience in recruitment, onboarding, and employee engagement."
+  },
+  {
+    "title": "Cyber Security Analyst",
+    "company": "HCL Technologies",
+    "location": "Chennai, India",
+    "salary": "₹11,00,000 per annum",
+    "description": "Expertise in ethical hacking, risk assessment, and network security required."
+  },
+  {
+    "title": "Cloud Engineer",
+    "company": "Amazon Web Services (AWS)",
+    "location": "Bangalore, India",
+    "salary": "₹15,00,000 per annum",
+    "description": "Experience with AWS, Azure, or Google Cloud required. Certifications preferred."
+  },
+  {
+    "title": "UI/UX Designer",
+    "company": "Zomato",
+    "location": "Gurgaon, India",
+    "salary": "₹9,00,000 per annum",
+    "description": "Design engaging user interfaces and enhance user experience for mobile and web applications."
+  },
+  {
+    "title": "Product Manager",
+    "company": "Paytm",
+    "location": "Noida, India",
+    "salary": "₹18,00,000 per annum",
+    "description": "Responsible for managing the product lifecycle, coordinating with developers, and improving user experience."
+  },
+  {
+    "title": "Backend Developer",
+    "company": "Swiggy",
+    "location": "Bangalore, India",
+    "salary": "₹13,00,000 per annum",
+    "description": "Strong knowledge of Node.js, MongoDB, and REST APIs required."
+  },
+  {
+    "title": "Financial Analyst",
+    "company": "HDFC Bank",
+    "location": "Mumbai, India",
+    "salary": "₹9,50,000 per annum",
+    "description": "Looking for a financial analyst with experience in budgeting, forecasting, and financial modeling."
+  }
+]
