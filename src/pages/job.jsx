@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Spline from "@splinetool/react-spline";
+import ApplyModal from "../components/applyModal";
 
 export default function JobBoard() {
   const [jobs, setJobs] = useState([]);
@@ -10,6 +10,9 @@ export default function JobBoard() {
   const [salaryFilter, setSalaryFilter] = useState(0);
   const [experienceFilter, setExperienceFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const jobsPerPage = 5;
 
   useEffect(() => {
@@ -57,25 +60,34 @@ export default function JobBoard() {
     startIndex + jobsPerPage
   );
 
+  const openModal = (job) => {
+    setSelectedJob(job);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-full -z-10">
+      {/* <div className="fixed top-0 left-0 w-full h-full -z-10">
         <Spline scene="https://prod.spline.design/BBpkTraXoIZITs90/scene.splinecode" />
-      </div>
-      <div className="flex md:flex-row flex-col bg-transparent min-h-screen p-6">
+      </div> */}
+      <div className="flex md:flex-row flex-col bg-bglight min-h-screen p-6">
         {/* Sidebar Filters */}
-        <div className="md:w-1/4 bg-transparent w-full p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold mb-4">Filters</h2>
+        <div className="md:w-1/4 bg-white-bg-bg backdrop-blur-md w-full p-6 rounded-4xl shadow-md">
+          <h2 className="text-lg text-white font-semibold mb-4">Filters</h2>
 
           <input
             type="text"
             placeholder="Search by title, company..."
-            className="w-full p-2 border rounded mb-4"
+            className="w-full p-2 border rounded-4xl mb-4"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
           <select
-            className="w-full p-2 border rounded mb-4"
+            className="w-full p-2 border rounded-4xl mb-4"
             onChange={(e) => setLocationFilter(e.target.value)}
           >
             <option value="">All Locations</option>
@@ -98,7 +110,7 @@ export default function JobBoard() {
           <p className="text-gray-600">Salary: ₹{salaryFilter}</p>
 
           <select
-            className="w-full p-2 border rounded mb-4"
+            className="w-full p-2 border rounded-4xl mb-4"
             onChange={(e) => setExperienceFilter(e.target.value)}
           >
             <option value="">Experience</option>
@@ -109,7 +121,7 @@ export default function JobBoard() {
         </div>
 
         {/* Job Listings */}
-        <div className="md:w-3/4 w-full  md:ml-6">
+        <div className="md:w-3/4 w-full md:ml-6">
           <h1 className="text-2xl font-bold mb-6">Job Listings</h1>
 
           <div className="space-y-6">
@@ -117,24 +129,18 @@ export default function JobBoard() {
               displayedJobs.map((job, index) => (
                 <div
                   key={`job-${index}`}
-                  className="bg-transparent backdrop-blur-lg p-6 rounded-lg shadow-md"
+                  className="bg-white-bg backdrop-blur-lg p-6 rounded-4xl shadow-md"
                 >
                   <h2 className="text-xl font-semibold">{job.title}</h2>
                   <p className="text-gray-600">{job.company}</p>
                   <p className="text-sm text-gray-500">{job.location}</p>
                   <p className="text-sm text-gray-500">Salary: ₹{job.salary}</p>
-                  <p className="text-sm text-gray-500">{job.description}</p>
-                  <p className="text-xs text-gray-400">
-                    Posted on: {new Date(job.datePosted).toLocaleDateString()}
-                  </p>
-                  <a
-                    href={job.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors inline-block"
+                  <button
+                    onClick={() => openModal(job)}
+                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-4xl hover:bg-blue-600 transition-colors"
                   >
                     Apply Now
-                  </a>
+                  </button>
                 </div>
               ))
             ) : (
@@ -147,7 +153,7 @@ export default function JobBoard() {
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className={`px-4 py-2 border rounded ${
+              className={`px-4 py-2 border rounded-4xl ${
                 currentPage === 1
                   ? "text-gray-400 cursor-not-allowed"
                   : "text-black hover:bg-gray-200"
@@ -163,7 +169,7 @@ export default function JobBoard() {
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
-              className={`px-4 py-2 border rounded ${
+              className={`px-4 py-2 border rounded-4xl ${
                 currentPage === totalPages
                   ? "text-gray-400 cursor-not-allowed"
                   : "text-black hover:bg-gray-200"
@@ -174,6 +180,11 @@ export default function JobBoard() {
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && selectedJob && (
+        <ApplyModal selectedJob={selectedJob} closeModal={closeModal} />
+      )}
     </>
   );
 }

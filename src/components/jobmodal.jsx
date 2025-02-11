@@ -19,7 +19,7 @@ export default function JobModal({ job, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg p-8 max-w-md w-full">
+      <div className="bg-white-bg rounded-4xl  p-8 max-w-md w-full">
         <h2 className="text-2xl font-bold mb-4">Apply for {job.title}</h2>
         <p className="mb-4">{job.company}</p>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -65,13 +65,13 @@ export default function JobModal({ job, onClose }) {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border rounded hover:bg-gray-100 transition-colors"
+              className="px-4 py-2 border rounded-4xl hover:bg-gray-100 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+              className="px-4 py-2 bg-blue-500 text-white rounded-4xl hover:bg-blue-600 transition-colors"
             >
               Submit Application
             </button>

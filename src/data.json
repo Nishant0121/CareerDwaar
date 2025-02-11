@@ -1,72 +1,52 @@
 [
   {
-    "title": "Software Engineer",
-    "company": "Tech Mahindra",
-    "location": "Pune, India",
-    "salary": "₹10,00,000 per annum",
-    "description": "Looking for a skilled full-stack developer with experience in React and Node.js."
+    "id": 1,
+    "name": "Amit Sharma",
+    "email": "amit.sharma@gmail.com",
+    "password_hash": "$2a$12$abc123",
+    "role": "employee",
+    "profile_picture": "https://example.com/profile1.jpg",
+    "created_at": "2025-02-08 10:00:00",
+    "updated_at": "2025-02-08 10:00:00"
   },
   {
-    "title": "Data Scientist",
-    "company": "TCS",
-    "location": "Bangalore, India",
-    "salary": "₹12,00,000 per annum",
-    "description": "Expertise in Python, Machine Learning, and AI required. Experience with TensorFlow is a plus."
+    "id": 2,
+    "name": "Raj Malhotra",
+    "email": "raj.malhotra@tcs.com",
+    "password_hash": "$2a$12$def456",
+    "role": "employer",
+    "profile_picture": "https://example.com/profile2.jpg",
+    "created_at": "2025-02-08 10:15:00",
+    "updated_at": "2025-02-08 10:15:00"
   },
   {
-    "title": "Digital Marketing Manager",
-    "company": "Infosys",
-    "location": "Mumbai, India",
-    "salary": "₹8,00,000 per annum",
-    "description": "Responsible for managing digital marketing campaigns, SEO, and social media strategy."
+    "id": 3,
+    "name": "Priya Verma",
+    "email": "priya.verma@wipro.com",
+    "password_hash": "$2a$12$ghi789",
+    "role": "employer",
+    "profile_picture": "https://example.com/profile3.jpg",
+    "created_at": "2025-02-08 10:30:00",
+    "updated_at": "2025-02-08 10:30:00"
   },
   {
-    "title": "HR Executive",
-    "company": "Wipro",
-    "location": "Hyderabad, India",
-    "salary": "₹6,50,000 per annum",
-    "description": "Looking for an HR executive with experience in recruitment, onboarding, and employee engagement."
+    "id": 4,
+    "name": "Sneha Iyer",
+    "email": "sneha.iyer@gmail.com",
+    "password_hash": "$2a$12$jkl012",
+    "role": "employee",
+    "profile_picture": "https://example.com/profile4.jpg",
+    "created_at": "2025-02-08 10:45:00",
+    "updated_at": "2025-02-08 10:45:00"
   },
   {
-    "title": "Cyber Security Analyst",
-    "company": "HCL Technologies",
-    "location": "Chennai, India",
-    "salary": "₹11,00,000 per annum",
-    "description": "Expertise in ethical hacking, risk assessment, and network security required."
-  },
-  {
-    "title": "Cloud Engineer",
-    "company": "Amazon Web Services (AWS)",
-    "location": "Bangalore, India",
-    "salary": "₹15,00,000 per annum",
-    "description": "Experience with AWS, Azure, or Google Cloud required. Certifications preferred."
-  },
-  {
-    "title": "UI/UX Designer",
-    "company": "Zomato",
-    "location": "Gurgaon, India",
-    "salary": "₹9,00,000 per annum",
-    "description": "Design engaging user interfaces and enhance user experience for mobile and web applications."
-  },
-  {
-    "title": "Product Manager",
-    "company": "Paytm",
-    "location": "Noida, India",
-    "salary": "₹18,00,000 per annum",
-    "description": "Responsible for managing the product lifecycle, coordinating with developers, and improving user experience."
-  },
-  {
-    "title": "Backend Developer",
-    "company": "Swiggy",
-    "location": "Bangalore, India",
-    "salary": "₹13,00,000 per annum",
-    "description": "Strong knowledge of Node.js, MongoDB, and REST APIs required."
-  },
-  {
-    "title": "Financial Analyst",
-    "company": "HDFC Bank",
-    "location": "Mumbai, India",
-    "salary": "₹9,50,000 per annum",
-    "description": "Looking for a financial analyst with experience in budgeting, forecasting, and financial modeling."
+    "id": 5,
+    "name": "Arjun Kapoor",
+    "email": "arjun.kapoor@accenture.com",
+    "password_hash": "$2a$12$mno345",
+    "role": "employer",
+    "profile_picture": "https://example.com/profile5.jpg",
+    "created_at": "2025-02-08 11:00:00",
+    "updated_at": "2025-02-08 11:00:00"
   }
 ]

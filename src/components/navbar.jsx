@@ -8,7 +8,7 @@ const Navbar = () => {
   const { user } = useAuth();
 
   return (
-    <nav className="bg-primary-orange rounded-full m-2 px-4 p-2 text-white">
+    <nav className=" bg-gradient-to-r from-primary-orange to-primary-orange/50 bg-primary-orange rounded-full m-2 px-4 p-2 text-white">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-xl font-bold">CareerDwaar</h1>
         {/* Mobile Menu */}
@@ -20,7 +20,7 @@ const Navbar = () => {
             <Menu />
           </button>
           {isOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+            <div className="absolute right-0 mt-2 w-48 bg-white-bg rounded-md shadow-lg py-1">
               <Link
                 to="/"
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -36,7 +36,7 @@ const Navbar = () => {
                 Jobs
               </Link>
               <Link
-                to={user ? "/dashboard" : "/login"}
+                to={user ? "/profile" : "/login"}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 onClick={() => setIsOpen(false)}
               >
@@ -54,7 +54,7 @@ const Navbar = () => {
             Jobs
           </Link>
           <Link
-            to={user ? "/dashboard" : "/login"}
+            to={user ? "/profile" : "/login"}
             className="flex bg-orange-300 rounded-full p-2 items-center space-x-2 hover:underline"
           >
             {/* Display Profile Picture if User is Logged In */}

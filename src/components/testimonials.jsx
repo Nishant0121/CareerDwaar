@@ -27,7 +27,7 @@ export default function Testimonials() {
         {testimonials.map((testimonial, index) => (
           <div
             key={index}
-            className="bg-transparent backdrop-blur-lg p-6 rounded-lg shadow-md border border-primary-orange"
+            className="bg-transparent backdrop-blur-lg p-6 rounded-4xl  shadow-md border border-primary-orange"
           >
             <div className="flex items-center gap-4 mb-4">
               <img

@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 const mysql = require("mysql2/promise");
 require("dotenv").config();
-const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcryptjs");
 
 // Database connection
@@ -20,7 +19,7 @@ async function addJobPosting(jobData) {
   try {
     const connection = await pool.getConnection();
     const [result] = await connection.execute(
-      "INSERT INTO Jobs (title, company, location, salary, description) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO jobs (employer_id, title, category, job_type, location, salary, deadline, google_form_link)VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
       jobData
     );
     connection.release();
@@ -35,7 +34,7 @@ async function addJobPosting(jobData) {
 async function getJobPostings() {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.execute("SELECT * FROM Jobs");
+    const [rows] = await connection.execute("SELECT * FROM jobs");
     connection.release();
     return rows;
   } catch (error) {
@@ -44,21 +43,22 @@ async function getJobPostings() {
   }
 }
 
-// Function to register a new user
+// Function to register a new user (employee)
 async function registerUser(
   name,
   email,
   password,
   gender,
-  role = "Employee",
-  profilePictureURL = ""
+  college_name,
+  branch,
+  resume_link
 ) {
   try {
     const connection = await pool.getConnection();
 
     // Check if email already exists
     const [existingUsers] = await connection.execute(
-      "SELECT * FROM Users WHERE email = ?",
+      "SELECT * FROM users WHERE email = ?",
       [email]
     );
     if (existingUsers.length > 0) {
@@ -68,36 +68,98 @@ async function registerUser(
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-    const userId = uuidv4();
-    const dateJoined = new Date();
-    const status = "Active";
 
-    // Default profile picture
-    profilePictureURL =
+    // Default profile picture based on gender
+    const profilePictureURL =
       gender === "male"
         ? "https://avatar.iran.liara.run/public/boy"
         : "https://avatar.iran.liara.run/public/girl";
 
-    // Insert user
+    // Insert user into users table
+    const [userResult] = await connection.execute(
+      "INSERT INTO users (name, email, password_hash, role, profile_picture) VALUES (?, ?, ?, ?, ?)",
+      [name, email, hashedPassword, "employee", profilePictureURL]
+    );
+
+    const userId = userResult.insertId; // Get the newly created user ID
+
+    // Insert employer details into employers table
     await connection.execute(
-      "INSERT INTO Users (userId, name, email, password, role, profilePictureURL, dateJoined, gender, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [
-        userId,
-        name,
-        email,
-        hashedPassword,
-        role,
-        profilePictureURL,
-        dateJoined,
-        gender,
-        status,
-      ]
+      "INSERT INTO students (user_id, college_name, branch, resume_link) VALUES (?, ?, ?, ?)",
+      [userId, college_name, branch || null, resume_link || null]
     );
 
     connection.release();
-    return { success: true, message: "User registered successfully", userId };
+    return {
+      success: true,
+      message: "User registered successfully",
+      userId: userResult.insertId,
+    };
   } catch (error) {
     console.error("Error registering user:", error);
+    throw error;
+  }
+}
+
+// Function to register an employer
+async function registerEmployer(
+  name,
+  email,
+  password,
+  gender,
+  company_name,
+  industry,
+  website,
+  logo
+) {
+  const connection = await pool.getConnection();
+  try {
+    await connection.beginTransaction(); // Start transaction
+
+    // Check if email already exists
+    const [existingUsers] = await connection.execute(
+      "SELECT * FROM users WHERE email = ?",
+      [email]
+    );
+    if (existingUsers.length > 0) {
+      connection.release();
+      return { success: false, message: "Email already registered" };
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Default profile picture based on gender
+    const profilePictureURL =
+      gender === "male"
+        ? "https://avatar.iran.liara.run/public/boy"
+        : "https://avatar.iran.liara.run/public/girl";
+
+    // Insert user into users table (as an employer)
+    const [userResult] = await connection.execute(
+      "INSERT INTO users (name, email, password_hash, role, profile_picture) VALUES (?, ?, ?, ?, ?)",
+      [name, email, hashedPassword, "employer", profilePictureURL]
+    );
+
+    const userId = userResult.insertId; // Get the newly created user ID
+
+    // Insert employer details into employers table
+    await connection.execute(
+      "INSERT INTO employers (user_id, company_name, industry, website, logo) VALUES (?, ?, ?, ?, ?)",
+      [userId, company_name, industry || null, website || null, logo || null]
+    );
+
+    await connection.commit(); // Commit transaction
+    connection.release();
+    return {
+      success: true,
+      message: "Employer registered successfully",
+      userId,
+    };
+  } catch (error) {
+    await connection.rollback(); // Rollback transaction if an error occurs
+    connection.release();
+    console.error("Error registering employer:", error);
     throw error;
   }
 }
@@ -107,7 +169,7 @@ async function loginUser(email, password) {
   try {
     const connection = await pool.getConnection();
     const [users] = await connection.execute(
-      "SELECT * FROM Users WHERE email = ?",
+      "SELECT * FROM users WHERE email = ?",
       [email]
     );
 
@@ -118,8 +180,14 @@ async function loginUser(email, password) {
 
     const user = users[0];
 
-    // Check password
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    // Ensure password_hash exists before comparing
+    if (!user.password_hash) {
+      connection.release();
+      return { success: false, message: "Invalid user data" };
+    }
+
+    // Compare the provided password with the hashed password
+    const passwordMatch = await bcrypt.compare(password, user.password_hash);
     if (!passwordMatch) {
       connection.release();
       return { success: false, message: "Incorrect password" };
@@ -130,13 +198,12 @@ async function loginUser(email, password) {
       success: true,
       message: "Login successful",
       user: {
-        userId: user.userId,
+        userId: user.id,
         name: user.name,
         email: user.email,
         role: user.role,
-        profilePictureURL: user.profilePictureURL,
-        dateJoined: user.dateJoined,
-        status: user.status,
+        profilePictureURL: user.profile_picture,
+        createdAt: user.created_at,
       },
     };
   } catch (error) {
@@ -145,4 +212,96 @@ async function loginUser(email, password) {
   }
 }
 
-module.exports = { addJobPosting, getJobPostings, registerUser, loginUser };
+async function applyJob(job_id, name, email) {
+  try {
+    const connection = await pool.getConnection();
+    const [result] = await connection.execute(
+      "SELECT * FROM user_student_view WHERE email = ?",
+      [email]
+    );
+
+    if (result.length === 0) {
+      connection.release();
+      return { success: false, message: "User not found" };
+    }
+
+    const user = result[0];
+
+    const [response] = await connection.execute(
+      "INSERT INTO applications (job_id, student_id, resume_link) VALUES (?, ?, ?)",
+      [job_id, user.user_id, user.resume_link]
+    );
+
+    if (response.affectedRows === 0) {
+      connection.release();
+      return { success: false, message: "Failed to apply for the job" };
+    }
+
+    connection.release();
+    return { success: true, message: "Applied for the job successfully" };
+  } catch (error) {
+    console.error("Error applying job:", error);
+    throw error;
+  }
+}
+
+async function getAppliedJobs(userId) {
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.execute(
+      "SELECT * FROM student_applied_jobs WHERE student_id = ?",
+      [userId]
+    );
+    connection.release();
+    return rows;
+  } catch (error) {
+    console.error("Error fetching applied jobs:", error);
+    throw error;
+  }
+}
+
+async function getPostedJobs(userId) {
+  const connection = await pool.getConnection();
+  try {
+    const [rows] = await connection.execute(
+      "SELECT * FROM jobs WHERE employer_id = ?",
+      [Number(userId)]
+    );
+    console.log("Fetched jobs:", rows);
+    return rows;
+  } catch (error) {
+    console.error("Error fetching posted jobs:", error);
+    throw error;
+  } finally {
+    connection.release();
+  }
+}
+
+async function getApplicationsByJobId(jobId) {
+  const connection = await pool.getConnection();
+  try {
+    const [rows] = await connection.execute(
+      "SELECT * FROM job_applications_view WHERE job_id = ?",
+      [jobId]
+    );
+    console.log(jobId);
+    return rows;
+  } catch (error) {
+    console.error("Error fetching applications:", error);
+    throw error;
+  } finally {
+    connection.release();
+  }
+}
+
+module.exports = {
+  addJobPosting,
+  getJobPostings,
+  registerUser,
+  loginUser,
+  registerEmployer,
+  applyJob,
+  getAppliedJobs,
+  getPostedJobs,
+  getApplicationsByJobId,
+};

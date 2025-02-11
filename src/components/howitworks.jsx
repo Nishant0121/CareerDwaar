@@ -29,7 +29,7 @@ export default function HowItWorks() {
         {steps.map((step, index) => (
           <div
             key={index}
-            className="relative p-6 rounded-lg bg-transparent backdrop-blur-md border border-primary-blue hover:bg-card/80 transition-colors"
+            className="relative p-6 rounded-4xl  bg-transparent backdrop-blur-md border border-primary-blue hover:bg-card/80 transition-colors"
           >
             <div className="flex flex-col items-center text-center space-y-4">
               <div className="p-3 rounded-full bg-primary-orange/10">
