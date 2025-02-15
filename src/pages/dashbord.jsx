@@ -15,7 +15,7 @@ export default function Dashbord() {
 
       try {
         const response = await fetch(
-          `http://localhost:5000/jobs/employer/${employerId}`
+          `http://localhost:5000/api/jobs/employer/${employerId}`
         );
         const data = await response.json();
         setJobs(data);
@@ -33,7 +33,7 @@ export default function Dashbord() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/applications/job/${job.id}`
+        `http://localhost:5000/api/applications/job/${job.id}`
       );
       const data = await response.json();
       setApplications(data);
@@ -118,9 +118,9 @@ export default function Dashbord() {
               <p className="text-gray-500 mt-3">No applications yet.</p>
             ) : (
               <ul className="mt-4 space-y-3">
-                {applications.map((application) => (
+                {applications.map((application, index) => (
                   <li
-                    key={application.id}
+                    key={index}
                     className="p-4 bg-gray-100 rounded-4xl  shadow-sm border border-gray-300"
                   >
                     <p className="text-gray-700">

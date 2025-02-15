@@ -18,7 +18,7 @@ export default function JobBoard() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/jobs");
+        const response = await axios.get("http://localhost:5000/api/jobs");
         const sortedJobs = response.data.sort(
           (a, b) => new Date(b.datePosted) - new Date(a.datePosted)
         );

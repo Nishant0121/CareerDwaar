@@ -33,7 +33,7 @@ export default function AddJob() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/add-job", {
+      const response = await axios.post("http://localhost:5000/api/add-job", {
         employer_id: user.userId, // Ensure the employer ID is sen
         ...formData,
       });

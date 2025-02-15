@@ -49,19 +49,22 @@ export default function Register() {
     if (!resumeDriveLink) return;
 
     try {
-      const response = await axios.post("http://localhost:5000/register", {
-        name,
-        email,
-        password,
-        gender,
-        college_name: collegeName,
-        branch,
-        resume_link: resumeDriveLink,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        {
+          name,
+          email,
+          password,
+          gender,
+          college_name: collegeName,
+          branch,
+          resume_link: resumeDriveLink,
+        }
+      );
 
       console.log("Registration successful:", response.data);
       alert("Registration Successful! Please login.");
-      window.location.href = "/login";
+      window.location.href = "/api/auth/login";
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
     }
@@ -156,7 +159,7 @@ export default function Register() {
 
         <p className="text-sm text-gray-500 mt-3 text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-500 hover:underline">
+          <a href="/api/auth/login" className="text-blue-500 hover:underline">
             Login
           </a>
         </p>

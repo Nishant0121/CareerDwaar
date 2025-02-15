@@ -31,7 +31,7 @@ export default function EmployerRegister() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/register-employer",
+        "http://localhost:5000/api/auth/register-employer",
         {
           name: formData.name,
           email: formData.email,

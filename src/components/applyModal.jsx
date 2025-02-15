@@ -15,7 +15,7 @@ export default function ApplyModal({ selectedJob, closeModal }) {
       return;
     }
 
-    const response = await axios.post("http://localhost:5000/apply", {
+    const response = await axios.post("http://localhost:5000/api/apply", {
       job_id: selectedJob.id.toString(),
       name: user.name,
       email: user.email,

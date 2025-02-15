@@ -42,4 +42,4 @@ JOIN students ON applications.student_id = students.user_id
 JOIN users ON students.user_id = users.id;
 
 
-SELECT * FROM student_applied_jobs WHERE student_id = 10;
+SELECT * FROM applications_view WHERE job_id = 10

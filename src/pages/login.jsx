@@ -11,10 +11,13 @@ export default function Login() {
     setError(""); // Reset previous error messages
 
     try {
-      const response = await axios.post("http://localhost:5000/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
 
       console.log("Login successful:", response.data);
       alert("Login Successful!");
