@@ -26,7 +26,7 @@ export default function Register() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/upload-resume",
+        "https://careerdwaar.onrender.com/upload-resume",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -50,7 +50,7 @@ export default function Register() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://careerdwaar.onrender.com/api/auth/register",
         {
           name,
           email,

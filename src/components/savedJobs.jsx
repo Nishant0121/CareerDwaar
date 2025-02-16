@@ -9,7 +9,7 @@ export default function SavedJobs() {
   const getSavedJobs = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/applied-jobs",
+        "https://careerdwaar.onrender.com/api/applied-jobs",
         {
           userId: user.userId, // Correct way to send data
         }

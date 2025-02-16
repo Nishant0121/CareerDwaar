@@ -33,10 +33,13 @@ export default function AddJob() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/add-job", {
-        employer_id: user.userId, // Ensure the employer ID is sen
-        ...formData,
-      });
+      const response = await axios.post(
+        "https://careerdwaar.onrender.com/api/add-job",
+        {
+          employer_id: user.userId, // Ensure the employer ID is sen
+          ...formData,
+        }
+      );
 
       alert("Job added successfully!");
       console.log(response.data);

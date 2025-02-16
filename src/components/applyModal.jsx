@@ -15,11 +15,14 @@ export default function ApplyModal({ selectedJob, closeModal }) {
       return;
     }
 
-    const response = await axios.post("http://localhost:5000/api/apply", {
-      job_id: selectedJob.id.toString(),
-      name: user.name,
-      email: user.email,
-    });
+    const response = await axios.post(
+      "https://careerdwaar.onrender.com/api/apply",
+      {
+        job_id: selectedJob.id.toString(),
+        name: user.name,
+        email: user.email,
+      }
+    );
 
     if (response.status !== 200) {
       alert("Failed to apply for the job.");

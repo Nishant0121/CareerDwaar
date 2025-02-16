@@ -15,7 +15,7 @@ export default function Dashbord() {
 
       try {
         const response = await fetch(
-          `http://localhost:5000/api/jobs/employer/${employerId}`
+          `https://careerdwaar.onrender.com/api/jobs/employer/${employerId}`
         );
         const data = await response.json();
         setJobs(data);
@@ -33,7 +33,7 @@ export default function Dashbord() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/applications/job/${job.id}`
+        `https://careerdwaar.onrender.com/api/applications/job/${job.id}`
       );
       const data = await response.json();
       setApplications(data);

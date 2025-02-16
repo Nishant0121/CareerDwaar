@@ -18,7 +18,9 @@ export default function JobBoard() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/jobs");
+        const response = await axios.get(
+          "https://careerdwaar.onrender.com/api/jobs"
+        );
         const sortedJobs = response.data.sort(
           (a, b) => new Date(b.datePosted) - new Date(a.datePosted)
         );
