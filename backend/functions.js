@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+const fs = require("fs");
 const mysql = require("mysql2/promise");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
