@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const multer = require("multer");
 const { google } = require("googleapis");
+const { Readable } = require("stream"); // Import the Readable stream class
 const jobRoutes = require("./routes/jobRoutes");
 const authRoutes = require("./routes/authRoutes");
 
@@ -11,7 +12,8 @@ dotenv.config();
 
 const app = express();
 
-const upload = multer({ dest: "uploads/" });
+// Use memory storage for multer
+const upload = multer({ storage: multer.memoryStorage() });
 
 const auth = new google.auth.GoogleAuth({
   keyFile: "./careerdwaar.json",
@@ -52,14 +54,19 @@ app.post("/upload-resume", upload.single("file"), async (req, res) => {
       parents: ["16CkLIxHrWL8j77MGzGhh-QqNKMf7z_P5"],
     };
 
+    // Convert buffer to a readable stream
+    const bufferStream = new Readable();
+    bufferStream.push(req.file.buffer); // Push the buffer into the stream
+    bufferStream.push(null); // End the stream
+
     const media = {
       mimeType: req.file.mimetype,
-      body: Buffer.from(req.file.buffer),
+      body: bufferStream, // Pass the readable stream here
     };
 
     const file = await drive.files.create({
       resource: fileMetadata,
-      media: { mimeType: req.file.mimetype, body: media.body },
+      media: media,
       fields: "id",
     });
 

@@ -14,8 +14,13 @@ export default function BasicInfo() {
     <>
       <div className=" grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex items-center space-x-4">
-          <div className="h-20 w-20">
+          <div className=" relative h-20 w-20">
             <img src={user.profilePictureURL} alt={user.name} />
+            <div
+              className={`h-5 w-5 ${
+                user?.role == "student" ? "bg-blue-500" : "bg-green-500"
+              }  z-10 rounded-full absolute bottom-0 right-0`}
+            ></div>
           </div>
           <div>
             <h2 className="text-2xl font-semibold">{user.name}</h2>

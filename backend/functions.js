@@ -88,7 +88,7 @@ async function registerUser(
     // Insert user into users table
     const [userResult] = await connection.execute(
       "INSERT INTO users (name, email, password_hash, role, profile_picture) VALUES (?, ?, ?, ?, ?)",
-      [name, email, hashedPassword, "employee", profilePictureURL]
+      [name, email, hashedPassword, "student", profilePictureURL]
     );
 
     const userId = userResult.insertId; // Get the newly created user ID

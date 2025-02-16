@@ -64,7 +64,7 @@ export default function Register() {
 
       console.log("Registration successful:", response.data);
       alert("Registration Successful! Please login.");
-      window.location.href = "/api/auth/login";
+      window.location.href = "/login";
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
     }
