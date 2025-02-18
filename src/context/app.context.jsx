@@ -13,7 +13,7 @@ export const AppProvider = ({ children }) => {
   const getStudent = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/auth/getstudent/${user.userId}`
+        `https://careerdwaar.onrender.com/api/auth/getstudent/${user.userId}`
       );
       setStudent(response.data);
     } catch (error) {
