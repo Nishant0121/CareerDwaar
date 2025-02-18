@@ -73,23 +73,20 @@ export default function JobBoard() {
 
   return (
     <>
-      {/* <div className="fixed top-0 left-0 w-full h-full -z-10">
-        <Spline scene="https://prod.spline.design/BBpkTraXoIZITs90/scene.splinecode" />
-      </div> */}
       <div className="flex md:flex-row flex-col bg-bglight min-h-screen p-6">
         {/* Sidebar Filters */}
-        <div className="md:w-1/4 bg-white-bg-bg backdrop-blur-md w-full p-6 rounded-4xl shadow-md">
-          <h2 className="text-lg text-white font-semibold mb-4">Filters</h2>
+        <div className="md:w-1/4 bg-white-bg backdrop-blur-md w-full p-6 rounded-4xl shadow-md  min-h-fit md:min-h-screen">
+          <h2 className="text-lg text-black font-semibold mb-4">Filters</h2>
 
           <input
             type="text"
             placeholder="Search by title, company..."
-            className="w-full p-2 border rounded-4xl mb-4"
+            className="w-full max-w-[50vw] mx-auto p-2 border rounded-4xl mb-4"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
           <select
-            className="w-full p-2 border rounded-4xl mb-4"
+            className="w-full max-w-[50vw] mx-auto p-2 border rounded-4xl mb-4"
             onChange={(e) => setLocationFilter(e.target.value)}
           >
             <option value="">All Locations</option>
@@ -107,12 +104,12 @@ export default function JobBoard() {
             step="50000"
             value={salaryFilter}
             onChange={(e) => setSalaryFilter(Number(e.target.value))}
-            className="w-full mb-2"
+            className="w-full max-w-[50vw] mx-auto mb-2"
           />
           <p className="text-gray-600">Salary: ₹{salaryFilter}</p>
 
           <select
-            className="w-full p-2 border rounded-4xl mb-4"
+            className="w-full max-w-[50vw] mx-auto p-2 border rounded-4xl mb-4"
             onChange={(e) => setExperienceFilter(e.target.value)}
           >
             <option value="">Experience</option>
@@ -124,9 +121,9 @@ export default function JobBoard() {
 
         {/* Job Listings */}
         <div className="md:w-3/4 w-full md:ml-6">
-          <h1 className="text-2xl font-bold mb-6">Job Listings</h1>
+          <h1 className="text-2xl font-bold my-6">Job Listings</h1>
 
-          <div className="space-y-6">
+          <div className="space-y-6 overflow-y-auto max-h-screen">
             {displayedJobs.length > 0 ? (
               displayedJobs.map((job, index) => (
                 <div

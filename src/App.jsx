@@ -38,7 +38,11 @@ function App() {
           <Route
             path="dashboard"
             element={
-              user.role == "employer" ? <Dashbord /> : <Navigate to="/login" />
+              user?.role === "employer" || user?.role === "employee" ? (
+                <Dashbord />
+              ) : (
+                <Navigate to="/login" />
+              )
             }
           />
         </Route>

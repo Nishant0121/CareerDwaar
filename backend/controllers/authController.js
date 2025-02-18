@@ -1,4 +1,9 @@
-const { registerUser, loginUser, registerEmployer } = require("../functions");
+const {
+  registerUser,
+  loginUser,
+  registerEmployer,
+  getStudentInfoById,
+} = require("../functions");
 
 const register = async (req, res) => {
   try {
@@ -103,8 +108,20 @@ const registerEmployerUser = async (req, res) => {
   }
 };
 
+const getStudentInfo = async (req, res) => {
+  try {
+    const studentId = req.params.studentId;
+    const studentInfo = await getStudentInfoById(studentId);
+    res.json(studentInfo);
+  } catch (error) {
+    console.error("Error fetching student info:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   register,
   login,
   registerEmployerUser,
+  getStudentInfo,
 };

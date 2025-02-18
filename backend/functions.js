@@ -304,6 +304,45 @@ async function getApplicationsByJobId(jobId) {
   }
 }
 
+async function getStudentInfoById(studentId) {
+  const connection = await pool.getConnection();
+  try {
+    const query = `
+      SELECT 
+        u.id AS user_id,
+        u.name,
+        u.email,
+        u.role,
+        u.profile_picture,
+        u.created_at,
+        u.updated_at,
+        s.id AS student_id,
+        s.college_name,
+        s.branch,
+        s.resume_link,
+        s.is_verified
+      FROM users u
+      LEFT JOIN students s ON u.id = s.user_id
+      WHERE s.user_id = ?;
+    `;
+
+    const [rows] = await connection.execute(query, [studentId]);
+
+    // Check if the student exists in the result
+    if (rows.length === 0) {
+      throw new Error("Student not found");
+    }
+
+    // Return the student information (first row, as studentId is unique)
+    return rows[0];
+  } catch (error) {
+    console.error("Error fetching student info:", error);
+    throw new Error("Internal server error");
+  } finally {
+    connection.release(); // Release the connection back to the pool
+  }
+}
+
 module.exports = {
   addJobPosting,
   getJobPostings,
@@ -314,4 +353,5 @@ module.exports = {
   getAppliedJobs,
   getPostedJobs,
   getApplicationsByJobId,
+  getStudentInfoById,
 };
