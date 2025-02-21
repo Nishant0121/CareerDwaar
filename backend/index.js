@@ -7,6 +7,7 @@ const { google } = require("googleapis");
 const { Readable } = require("stream"); // Import the Readable stream class
 const jobRoutes = require("./routes/jobRoutes");
 const authRoutes = require("./routes/authRoutes");
+const companiesRoutes = require("./routes/companiesRoutes");
 
 dotenv.config();
 
@@ -43,6 +44,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api", jobRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/companies", companiesRoutes);
 
 // File upload route
 app.post("/upload-resume", upload.single("file"), async (req, res) => {

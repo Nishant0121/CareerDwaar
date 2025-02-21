@@ -343,6 +343,18 @@ async function getStudentInfoById(studentId) {
   }
 }
 
+async function getCompanies() {
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.execute("SELECT * FROM Companies");
+    connection.release();
+    return rows;
+  } catch (error) {
+    console.error("Error fetching job postings:", error);
+    throw error;
+  }
+}
+
 module.exports = {
   addJobPosting,
   getJobPostings,
@@ -354,4 +366,5 @@ module.exports = {
   getPostedJobs,
   getApplicationsByJobId,
   getStudentInfoById,
+  getCompanies,
 };
