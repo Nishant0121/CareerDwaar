@@ -2,12 +2,20 @@ import { LogOutIcon } from "lucide-react";
 import { useAuth } from "../context/app.context";
 
 export default function BasicInfo() {
-  const { user, logout, student } = useAuth();
+  const { user, logout, student, isLoading } = useAuth();
 
   const handleLogout = async () => {
     await logout();
     window.location.href = "/login";
   };
+
+  if (isLoading) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-3xl flex items-center justify-center">
+        <div className="animate-spin h-5 w-5 border-b-2 border-blue-500 rounded-full"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-3xl">

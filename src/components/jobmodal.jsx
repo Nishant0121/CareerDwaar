@@ -1,12 +1,15 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 
 export default function JobModal({ job, onClose }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [resume, setResume] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     // Here you would typically send the application data to your backend
     console.log("Submitting application", {
       name,
@@ -14,7 +17,10 @@ export default function JobModal({ job, onClose }) {
       resume,
       jobId: job.id,
     });
-    onClose();
+    setTimeout(() => {
+      setLoading(false);
+      onClose();
+    }, 2000);
   };
 
   return (
@@ -34,6 +40,7 @@ export default function JobModal({ job, onClose }) {
               onChange={(e) => setName(e.target.value)}
               required
               className="w-full p-2 border rounded"
+              disabled={loading}
             />
           </div>
           <div>
@@ -47,6 +54,7 @@ export default function JobModal({ job, onClose }) {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full p-2 border rounded"
+              disabled={loading}
             />
           </div>
           <div>
@@ -59,6 +67,7 @@ export default function JobModal({ job, onClose }) {
               onChange={(e) => setResume(e.target.files?.[0] || null)}
               required
               className="w-full p-2 border rounded"
+              disabled={loading}
             />
           </div>
           <div className="flex justify-end space-x-4">
@@ -66,14 +75,16 @@ export default function JobModal({ job, onClose }) {
               type="button"
               onClick={onClose}
               className="px-4 py-2 border rounded-4xl hover:bg-gray-100 transition-colors"
+              disabled={loading}
             >
               Cancel
             </button>
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-4xl hover:bg-blue-600 transition-colors"
+              disabled={loading}
             >
-              Submit Application
+              {loading ? "Loading..." : "Submit Application"}
             </button>
           </div>
         </form>

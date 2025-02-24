@@ -36,7 +36,7 @@ export default function AddJob() {
       const response = await axios.post(
         "https://careerdwaar.onrender.com/api/add-job",
         {
-          employer_id: user.userId, // Ensure the employer ID is sen
+          employer_id: user.userId, // Ensure the employer ID is sent
           ...formData,
         }
       );
@@ -68,6 +68,7 @@ export default function AddJob() {
             onChange={handleChange}
             required
             className="px-4 py-2 mb-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            disabled={loading}
           />
 
           {/* Category */}
@@ -78,6 +79,7 @@ export default function AddJob() {
             value={formData.category}
             onChange={handleChange}
             className="px-4 py-2 mb-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            disabled={loading}
           />
 
           {/* Job Type */}
@@ -87,6 +89,7 @@ export default function AddJob() {
             onChange={handleChange}
             required
             className="px-4 py-2 mb-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            disabled={loading}
           >
             <option value="full-time">Full-time</option>
             <option value="internship">Internship</option>
@@ -100,6 +103,7 @@ export default function AddJob() {
             value={formData.location}
             onChange={handleChange}
             className="px-4 py-2 mb-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            disabled={loading}
           />
 
           {/* Salary */}
@@ -110,6 +114,7 @@ export default function AddJob() {
             value={formData.salary}
             onChange={handleChange}
             className="px-4 py-2 mb-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            disabled={loading}
           />
 
           {/* Deadline */}
@@ -120,6 +125,7 @@ export default function AddJob() {
             onChange={handleChange}
             required
             className="px-4 py-2 mb-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            disabled={loading}
           />
 
           {/* Google Form Link */}
@@ -130,6 +136,7 @@ export default function AddJob() {
             value={formData.google_form_link}
             onChange={handleChange}
             className="px-4 py-2 mb-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            disabled={loading}
           />
 
           {/* Error Message */}

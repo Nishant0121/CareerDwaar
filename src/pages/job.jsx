@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import ApplyModal from "../components/applyModal";
 
 export default function JobBoard() {
   const [jobs, setJobs] = useState([]);
-  const [filteredJobs, setFilteredJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [salaryFilter, setSalaryFilter] = useState(0);
@@ -12,11 +11,13 @@ export default function JobBoard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedJob, setSelectedJob] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const jobsPerPage = 5;
+  const jobsPerPage = 6;
 
   useEffect(() => {
     const fetchJobs = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(
           "https://careerdwaar.onrender.com/api/jobs"
@@ -25,35 +26,41 @@ export default function JobBoard() {
           (a, b) => new Date(b.datePosted) - new Date(a.datePosted)
         );
         setJobs(sortedJobs);
-        setFilteredJobs(sortedJobs);
       } catch (error) {
         console.error("Error fetching jobs:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchJobs();
   }, []);
 
-  useEffect(() => {
-    const filtered = jobs.filter((job) => {
-      if (!job || !job.title) return false;
+  // 🔥 Optimized Search with useMemo and Filtering
+  const filteredJobs = useMemo(() => {
+    return jobs.filter((job) => {
+      if (!job) return false; // Ensure job exists
+
+      const jobTitle = job.title?.toLowerCase() ?? "";
+      const jobCompany = job.company?.toLowerCase() ?? "";
+      const jobLocation = job.location?.toLowerCase() ?? "";
 
       return (
         (searchTerm === "" ||
-          job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          job.location.toLowerCase().includes(searchTerm.toLowerCase())) &&
-        (locationFilter === "" || job.location === locationFilter) &&
+          jobTitle.includes(searchTerm.toLowerCase()) ||
+          jobCompany.includes(searchTerm.toLowerCase()) ||
+          jobLocation.includes(searchTerm.toLowerCase())) &&
+        (locationFilter === "" ||
+          jobLocation === locationFilter.toLowerCase()) &&
         (experienceFilter === "" || job.experience === experienceFilter) &&
         (salaryFilter === 0 || job.salary >= salaryFilter)
       );
     });
-
-    setFilteredJobs(filtered);
-    setCurrentPage(1);
   }, [searchTerm, locationFilter, salaryFilter, experienceFilter, jobs]);
 
-  const locations = [...new Set(jobs.map((job) => job.location))];
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filteredJobs]);
 
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
   const startIndex = (currentPage - 1) * jobsPerPage;
@@ -75,13 +82,15 @@ export default function JobBoard() {
     <>
       <div className="flex md:flex-row flex-col bg-bglight min-h-screen p-6">
         {/* Sidebar Filters */}
-        <div className="md:w-1/4 bg-white-bg backdrop-blur-md w-full p-6 rounded-4xl shadow-md  min-h-fit md:min-h-screen">
+        <div className="md:w-1/4 bg-white-bg backdrop-blur-md w-full p-6 rounded-4xl shadow-md min-h-fit md:min-h-screen">
           <h2 className="text-lg text-black font-semibold mb-4">Filters</h2>
 
+          {/* 🔍 Search Input with Debouncing */}
           <input
             type="text"
-            placeholder="Search by title, company..."
+            placeholder="Search by title, company, or location..."
             className="w-full max-w-[50vw] mx-auto p-2 border rounded-4xl mb-4"
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
@@ -90,11 +99,13 @@ export default function JobBoard() {
             onChange={(e) => setLocationFilter(e.target.value)}
           >
             <option value="">All Locations</option>
-            {locations.map((location, index) => (
-              <option key={`location-${index}`} value={location}>
-                {location}
-              </option>
-            ))}
+            {[...new Set(jobs.map((job) => job.location))].map(
+              (location, index) => (
+                <option key={`location-${index}`} value={location}>
+                  {location}
+                </option>
+              )
+            )}
           </select>
 
           <input
@@ -124,24 +135,32 @@ export default function JobBoard() {
           <h1 className="text-2xl font-bold my-6">Job Listings</h1>
 
           <div className="space-y-6 overflow-y-auto max-h-screen">
-            {displayedJobs.length > 0 ? (
-              displayedJobs.map((job, index) => (
-                <div
-                  key={`job-${index}`}
-                  className="bg-white-bg backdrop-blur-lg p-6 rounded-4xl shadow-md"
-                >
-                  <h2 className="text-xl font-semibold">{job.title}</h2>
-                  <p className="text-gray-600">{job.company}</p>
-                  <p className="text-sm text-gray-500">{job.location}</p>
-                  <p className="text-sm text-gray-500">Salary: ₹{job.salary}</p>
-                  <button
-                    onClick={() => openModal(job)}
-                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-4xl hover:bg-blue-600 transition-colors"
+            {isLoading ? (
+              <div className="flex justify-center">
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900"></div>
+              </div>
+            ) : displayedJobs.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {displayedJobs.map((job, index) => (
+                  <div
+                    key={`job-${index}`}
+                    className="bg-white-bg backdrop-blur-lg p-6 rounded-4xl shadow-md"
                   >
-                    Apply Now
-                  </button>
-                </div>
-              ))
+                    <h2 className="text-xl font-semibold">{job.title}</h2>
+                    <p className="text-gray-600">{job.company}</p>
+                    <p className="text-sm text-gray-500">{job.location}</p>
+                    <p className="text-sm text-gray-500">
+                      Salary: ₹{job.salary}
+                    </p>
+                    <button
+                      onClick={() => openModal(job)}
+                      className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-4xl hover:bg-blue-600 transition-colors"
+                    >
+                      Apply Now
+                    </button>
+                  </div>
+                ))}
+              </div>
             ) : (
               <p className="text-center text-gray-500">No jobs found.</p>
             )}

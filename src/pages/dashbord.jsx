@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/app.context";
+import { X } from "lucide-react";
 
 export default function Dashbord() {
   const [jobs, setJobs] = useState([]);
@@ -106,28 +107,40 @@ export default function Dashbord() {
 
       {/* Modal for applications */}
       {selectedJob && (
-        <div className="fixed inset-0 bg-transparent backdrop-blur-lg bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white-bg rounded-4xl  p-6 w-full max-w-[1000px] shadow-lg max-h-[80vh] overflow-auto">
-            <h3 className="text-2xl font-semibold text-gray-800">
-              Applications for {selectedJob.title}
-            </h3>
+        <div className="fixed inset-0 bg-transparent bg-opacity-50 backdrop-blur-lg flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1000px] shadow-lg max-h-[90vh] overflow-auto">
+            {/* Header Section */}
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800">
+                Applications for {selectedJob.title}
+              </h3>
+              <button
+                onClick={closeModal}
+                className="text-black font-semibold py-2 px-4 rounded-full transition-all duration-300 text-sm sm:text-base"
+              >
+                <X />
+              </button>
+            </div>
 
+            {/* Content Section */}
             {loading ? (
-              <p className="text-gray-500 mt-3">Loading applications...</p>
+              <p className="text-gray-500 text-center">
+                Loading applications...
+              </p>
             ) : applications.length === 0 ? (
-              <p className="text-gray-500 mt-3">No applications yet.</p>
+              <p className="text-gray-500 text-center">No applications yet.</p>
             ) : (
-              <ul className="mt-4 space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {applications.map((application, index) => (
-                  <li
+                  <div
                     key={index}
-                    className="p-4 bg-gray-100 rounded-4xl  shadow-sm border border-gray-300"
+                    className="p-4 bg-gray-100 flex flex-col rounded-xl shadow-lg border border-gray-300"
                   >
                     <p className="text-gray-700">
                       <strong>Student:</strong> {application.student_name}
                     </p>
                     <p className="text-gray-700">
-                      <strong>Status:</strong> {application.status}
+                      <strong>Status:</strong> {application.application_status}
                     </p>
                     <p className="text-gray-700">
                       <strong>Resume:</strong>{" "}
@@ -140,17 +153,20 @@ export default function Dashbord() {
                         View Resume
                       </a>
                     </p>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             )}
 
-            <button
-              onClick={closeModal}
-              className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-4xl  transition-all duration-300"
-            >
-              Close
-            </button>
+            {/* Bottom Close Button */}
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={closeModal}
+                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 text-sm sm:text-base"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

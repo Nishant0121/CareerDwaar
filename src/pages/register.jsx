@@ -71,10 +71,10 @@ export default function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100">
-      <div className="bg-white-bg shadow-lg rounded-4xl  p-8 w-96">
-        <h2 className="text-2xl font-bold text-center text-gray-700 mb-4">
-          Register
+    <div className="flex items-center justify-center rounded-4xl md:p-8 bg-gray-100">
+      <div className="bg-white shadow-lg rounded-4xl  p-8 w-96">
+        <h2 className="text-2xl font-bold text-center text-gray-900 mb-4">
+          Register as Student
         </h2>
 
         <form onSubmit={handleRegister} className="flex flex-col">

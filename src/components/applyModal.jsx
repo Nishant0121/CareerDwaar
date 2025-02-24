@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/app.context";
@@ -7,13 +8,17 @@ export default function ApplyModal({ selectedJob, closeModal }) {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userMessage, setUserMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const { user, student } = useAuth();
 
   console.log("student", student);
 
   const handleApply = async () => {
+    setLoading(true);
+
     if (!user.name || !user.email) {
       alert("Please fill in your details before applying.");
+      setLoading(false);
       return;
     }
 
@@ -25,6 +30,8 @@ export default function ApplyModal({ selectedJob, closeModal }) {
         email: user.email,
       }
     );
+
+    setLoading(false);
 
     if (response.status !== 200) {
       alert("Failed to apply for the job.");
@@ -95,9 +102,12 @@ export default function ApplyModal({ selectedJob, closeModal }) {
         <div className="flex justify-end">
           <button
             onClick={handleApply}
-            className="bg-green-500 text-white px-4 py-2 rounded-3xl hover:bg-green-600 mr-2"
+            className={`bg-green-500 text-white px-4 py-2 rounded-3xl hover:bg-green-600 mr-2 ${
+              loading ? "opacity-50" : ""
+            }`}
+            disabled={loading}
           >
-            Apply
+            {loading ? "Loading..." : "Apply"}
           </button>
           <button
             onClick={closeModal}

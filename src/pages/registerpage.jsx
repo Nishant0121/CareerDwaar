@@ -12,7 +12,7 @@ export default function RegisterPage() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col items-center min-h-screen bg-gray-100 p-5"
+      className="flex flex-col items-center min-h-screen w-full bg-transparent p-5"
     >
       <h1 className="text-3xl font-bold text-gray-700 mb-5">Register</h1>
 

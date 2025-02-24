@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 import React, { useState } from "react";
 
@@ -5,10 +6,12 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(""); // Reset previous error messages
+    setLoading(true); // Set loading to true
 
     try {
       const response = await axios.post(
@@ -25,6 +28,8 @@ export default function Login() {
       window.location.href = "/"; // Redirect after login
     } catch (err) {
       setError(err.response?.data?.message || "Invalid email or password");
+    } finally {
+      setLoading(false); // Set loading to false
     }
   };
 
@@ -59,13 +64,14 @@ export default function Login() {
           <button
             type="submit"
             className="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-all"
+            disabled={loading}
           >
-            Login
+            {loading ? "Loading..." : "Login"}
           </button>
         </form>
 
         <p className="text-sm text-gray-500 mt-3 text-center">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <a href="/register" className="text-blue-500 hover:underline">
             Sign up
           </a>
